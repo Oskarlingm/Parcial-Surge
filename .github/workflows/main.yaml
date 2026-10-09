@@ -1,0 +1,21 @@
+﻿name: Deploy to Surge
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar Surge
+        run: npm install -g surge
+      - name: Publicar pagina
+        run: surge . oskarling-parcial-2026.surge.sh --token "$SURGE_TOKEN"
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
